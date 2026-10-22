@@ -34,7 +34,7 @@ npx skills add openprose/prose -g -y
 
 | Say | What happens |
 |---|---|
-| "watch me do this" | You work in the *Playwright* tab group in Chrome; Claude records it |
+| "watch me do this" | You work in the *Playwright* tab group in Chrome (drag other tabs in); Claude records it |
 | "do X and remember how" | Claude does the task while recording it |
 | "save what you just did" | Claude replays a past session's browser steps and learns them |
 | "combine my A and B workflows" | A new workflow that reuses both |
@@ -46,7 +46,7 @@ Learned workflows are saved as `do-<name>` skills in `~/.claude/skills/`.
 ## Limits
 
 - Browser tasks only. Desktop apps are not supported yet.
-- In your own Chrome, only tabs in the *Playwright* tab group are recorded. Ask Claude to open any extra site there.
+- In your own Chrome, only tabs in the *Playwright* tab group are recorded. Links you open from those tabs join it; drag any other tab into the group before using it.
 - Steps that a site protects with signed requests, captchas or file pickers stay as clicks.
 
 ## Layout

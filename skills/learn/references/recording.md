@@ -13,7 +13,7 @@ Once per computer. Run every command yourself; the person only does the steps ma
 
 Attach with `node ~/.claude/skills/learn/scripts/browser.mjs learn-<workflow> start <start-url>`; it falls back to Playwright's own window, signed in once through a saved profile, when the extension is missing.
 
-**The Playwright tab group.** Attached, Playwright sees only the tabs in its own Chrome tab group: the ones it opened. Tell the person: "Work in the tabs inside the *Playwright* group. Ask me when you need another site and I'll open it there." Open extra tabs with `pw tab-new <url>`; a tab the person opens with ⌘T lands outside the group and is not recorded. When the task needs a tab Playwright cannot reach, record in Playwright's own window instead, where every tab is seen.
+**The Playwright tab group.** Attached, Playwright sees only the tabs in its own Chrome tab group. Links opened from a tab in the group (including ⌘-click) open inside it and are recorded. A tab opened with ⌘T or from a bookmark lands outside: the person drags it into the *Playwright* group, and recording picks it up from the page it is on (what happened in it before the drag is not recorded). Tell the person: "Work in the tabs inside the *Playwright* group. If you open a new tab, drag it into the group first." You can also open a tab there with `pw tab-new <url>`.
 
 **Finding the trace.** `tracing-stop` prints a relative `traces/trace-<id>.network`. Attached sessions write it under the system temp folder: `dirname "$(ls -t "$TMPDIR"/playwright-artifacts-*/trace-<id>.network | head -1)"` is the folder to summarise. Own-window sessions write it to `.playwright-cli/traces/`.
 
