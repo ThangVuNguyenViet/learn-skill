@@ -13,7 +13,17 @@ For each recorded step, find the requests it caused in the trace summary (same t
 
 Every step keeps a rung-4 click version as its fallback, except rung-2 and rung-3 steps, which never touch the page.
 
-Never name a model or start an `agent` / `session` for a step: the workflow runs in the person's own conversation, on the model they chose, so its cached context is reused on every step. Another agent starts from an empty cache and re-reads everything it needs. Use one only for steps inside a `parallel` block, which need separate contexts to run at the same time.
+## Where each step runs
+
+By default every step runs inline, in the person's own conversation, on the model they chose: its cached context is reused on every step, while another agent starts from an empty cache and re-reads everything it needs. Give a step its own `session` only when one of these holds, and write the reason as a comment beside it:
+
+| Case | Session |
+|---|---|
+| Steps in a `parallel` block | One per branch, no `model:`. |
+| A step reads a large input (an export, a long page) and returns a short result | `model: haiku`. Inline, the large input would be re-read from cache by every later step. |
+| A rung-3 step failed its check on the person's model during verification | `model:` the next larger model; verify again. |
+
+The retro lists every step that runs outside the conversation and why; the person can ask to keep it inline.
 
 ## Finding the request behind a step
 

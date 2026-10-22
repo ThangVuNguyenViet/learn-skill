@@ -106,7 +106,7 @@ return report
 
 Rules:
 - Step helpers run commands and return their output unchanged; the model writes nothing a step can compute.
-- No `model:` hints, `agent` or `session` blocks: every step runs inline on the person's model (see compiling.md). The one exception is a `parallel` block.
+- Every step runs inline on the person's model. A `session`, with or without `model:`, only for the cases in compiling.md § Where each step runs, each with its reason as a comment.
 - A step that saves, sends, pays or deletes starts with "ask the person to confirm, showing what will be sent" in its Strategies.
 - Use `try` / `catch` in Execution when a fallback must run a different step, not just a different file.
 
@@ -121,7 +121,7 @@ description: "Use for \"daily report\", \"campaign report for <day>\". Builds th
 Run the workflow here, in this conversation: read `~/.claude/skills/open-prose/SKILL.md` and execute
 `prose run ~/.claude/skills/do-daily-report/do-daily-report.prose.md` with the OpenProse root
 `~/.claude/workflow-runs/do-daily-report/`. Run every `call` inline, without a subagent; start a session
-only for the steps of a `parallel` block. Ask the person for any input they didn't give.
+only where the Execution block has a `session`. Ask the person for any input they didn't give.
 Afterwards, follow `~/.claude/skills/learn/references/retro.md` § After a run.
 
 <mermaid graph of the steps>

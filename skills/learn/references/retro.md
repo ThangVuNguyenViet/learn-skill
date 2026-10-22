@@ -16,6 +16,8 @@ Show, then wait for approval:
    | Explain each drop | You wrote it | A quick AI note |
    | Post the summary to the team page | 3 clicks | I ask you first, then post |
 
+   A step that runs outside this conversation says so in plain words in "From now on": "A quick helper reads the whole export, so this chat stays short", or "A stronger AI, because the quick one got it wrong". Offer to keep it here instead.
+
 3. **What it will ask for each time.** The values that changed between recordings, or that the person typed, phrased as questions: "Which day?"
 4. **What it can't speed up**, and why in one plain sentence: "The upload page needs you to pick the file, so I'll still open it."
 
