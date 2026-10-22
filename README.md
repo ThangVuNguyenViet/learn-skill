@@ -10,7 +10,7 @@ You approve every step table, every suggestion and every save. Nothing that send
 
 Open the Claude desktop app, go to the **Code** tab, and say:
 
-> Install the learn skill from github.com/ThangVuNguyenViet/learn-skill
+> Install the learn skill globally from github.com/ThangVuNguyenViet/learn-skill
 
 Then say "watch me" to start. Claude sets up the rest and walks you through the three things only you can do:
 
