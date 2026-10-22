@@ -50,4 +50,4 @@ A non-technical person who works only in the Claude desktop app teaches Claude a
 ## Open
 
 - Playwright Extension (tested 2026-10-22): attaching works with the extension's connection token. It sees only the tabs in its own Chrome tab group. The person's clicks inside the group are recorded as code, and the form submission reached the trace. Tabs opened with ⌘T fall outside the group and are not recorded. Attached traces land under `$TMPDIR/playwright-artifacts-*`. Dragging an existing tab into the group is untested.
-- Per-run OpenProse cost (~100K tokens of rules, read once per conversation and cached after) is accepted for now; revisit if it becomes a complaint.
+- Runs follow the `.prose.md` directly and load OpenProse's runtime only for `parallel` / `session` workflows: the first full run spent 35–40K tokens on runtime rules used only for run-folder bookkeeping (2026-10-22).

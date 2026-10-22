@@ -25,7 +25,7 @@ Approval means the person said yes to the table; changes go back to compiling.
 
 ## After a run
 
-Read `~/.claude/workflow-runs/do-<workflow>/steps.log` (written by the step runner, so it is the record of what happened; the run folder's `vm.log.md` is the model's own account). Look for:
+Read this run's lines of the workflow's `steps.log` (`~/.claude/workflow-runs/<the do- name>/steps.log`) (written by the step runner, so it is the record of what happened; the run folder's `vm.log.md` is the model's own account). Look for:
 
 - **Promote**: an AI step that returned the same answer for the same kind of input across runs (compare the run folders' step outputs) → candidate for plain code.
 - **Repair**: a step logged with `fallback: true` or `ok: false` → the page changed; offer to re-record that step.
