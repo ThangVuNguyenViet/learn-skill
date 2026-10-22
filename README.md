@@ -8,18 +8,27 @@ You approve every step table, every suggestion and every save. Nothing that send
 
 ## Install
 
+Open the Claude desktop app, go to the **Code** tab, and say:
+
+> Install the learn skill from github.com/ThangVuNguyenViet/learn-skill
+
+Then say "watch me" to start. Claude sets up the rest and walks you through the three things only you can do:
+
+- install Node.js if your Mac doesn't have it (it asks for your Mac password)
+- click **Add to Chrome** on the [Playwright Extension](https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm) in your usual Chrome
+- copy the code the extension shows and paste it to Claude once
+
+You need a Mac with Google Chrome.
+
+<details>
+<summary>Installing from a terminal</summary>
+
 ```bash
-npx skills add ThangVuNguyenViet/learn-skill
-npx skills add openprose/prose
+npx skills add ThangVuNguyenViet/learn-skill -g -y
+npx skills add openprose/prose -g -y
 ```
 
-You also need:
-
-- macOS with Google Chrome and Node.js 20 or later
-- the Claude desktop app (Code tab) or Claude Code
-- the [Playwright Extension](https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm) in your main Chrome profile
-
-`/learn` walks you through the rest the first time.
+</details>
 
 ## Use
 

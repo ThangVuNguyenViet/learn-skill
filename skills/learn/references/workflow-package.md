@@ -45,15 +45,11 @@ let metrics = call fetch-metrics
 
 call close-browser
 
-agent explainer:
-  model: haiku
-  prompt: "Explain in one sentence why each campaign's numbers dropped."
-
 let drops = call find-drops
   metrics: metrics
 
-let report = session: explainer
-  context: drops
+let report = call explain-drops
+  drops: drops
 
 return report
 ```
@@ -92,10 +88,25 @@ return report
 
 - run `node ~/.claude/skills/learn/scripts/run-step.mjs do-daily-report ~/.claude/skills/do-daily-report/steps/fetch-metrics.js '{"date":"<date>"}'` and return its output unchanged
 - when the command exits non-zero, run `steps/fetch-metrics.click.js` the same way and tell the person the page changed
+
+## explain-drops
+
+### Parameters
+
+- `drops`: the campaigns that dropped, with their numbers
+
+### Returns
+
+- `report`: each campaign with one sentence on why its numbers dropped
+
+### Strategies
+
+- write one sentence per campaign from the numbers given; invent nothing they do not show
 ````
 
 Rules:
 - Step helpers run commands and return their output unchanged; the model writes nothing a step can compute.
+- No `model:` hints, `agent` or `session` blocks: every step runs inline on the person's model (see compiling.md). The one exception is a `parallel` block.
 - A step that saves, sends, pays or deletes starts with "ask the person to confirm, showing what will be sent" in its Strategies.
 - Use `try` / `catch` in Execution when a fallback must run a different step, not just a different file.
 
@@ -107,9 +118,10 @@ name: do-daily-report
 description: "Use for \"daily report\", \"campaign report for <day>\". Builds the daily campaign report."
 ---
 
-Run the workflow in a subagent on `model: haiku`: it reads `~/.claude/skills/open-prose/SKILL.md` and executes
+Run the workflow here, in this conversation: read `~/.claude/skills/open-prose/SKILL.md` and execute
 `prose run ~/.claude/skills/do-daily-report/do-daily-report.prose.md` with the OpenProse root
-`~/.claude/workflow-runs/do-daily-report/`. Ask the person for any input they didn't give.
+`~/.claude/workflow-runs/do-daily-report/`. Run every `call` inline, without a subagent; start a session
+only for the steps of a `parallel` block. Ask the person for any input they didn't give.
 Afterwards, follow `~/.claude/skills/learn/references/retro.md` § After a run.
 
 <mermaid graph of the steps>

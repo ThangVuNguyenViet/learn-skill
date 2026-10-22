@@ -8,11 +8,12 @@ For each recorded step, find the requests it caused in the trace summary (same t
 |---|---|---|
 | 1. In-page request | The step's effect is a first-party request whose inputs you can explain (typed values, earlier results, values the page shows). | A browser step file that calls `fetch` inside the page (below). |
 | 2. Plain code | The step is a decision or transform with a rule you can state: filter, compare, format, total. | A `.ts` file run with `npx -y tsx`. |
-| 3. Haiku | Judgment on short text: classify, summarise, extract from free text. | An `agent` with `model: haiku` in the workflow's Execution. |
-| 4. Sonnet / Opus | Judgment that Haiku fails in verification. | Same, with the larger model. |
-| 5. Click | Anything below fails: signed or encrypted requests, per-form tokens you cannot read from the page, captchas, file pickers. | A browser step file using `page` locators, taken from the recorded actions. |
+| 3. Judgment | Classify, summarise, or extract from free text: no rule you can state. | An inline helper whose Strategies say what to judge; the model running the workflow does it. |
+| 4. Click | Anything below fails: signed or encrypted requests, per-form tokens you cannot read from the page, captchas, file pickers. | A browser step file using `page` locators, taken from the recorded actions. |
 
-Every step keeps a rung-5 click version as its fallback, except rung-2 and rung-3/4 steps, which never touch the page.
+Every step keeps a rung-4 click version as its fallback, except rung-2 and rung-3 steps, which never touch the page.
+
+Never name a model or start an `agent` / `session` for a step: the workflow runs in the person's own conversation, on the model they chose, so its cached context is reused on every step. Another agent starts from an empty cache and re-reads everything it needs. Use one only for steps inside a `parallel` block, which need separate contexts to run at the same time.
 
 ## Finding the request behind a step
 

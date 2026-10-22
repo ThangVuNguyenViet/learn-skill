@@ -6,7 +6,7 @@ Shape borrowed from Matt Pocock's `retro`: read the run's primary evidence, list
 
 Show, then wait for approval:
 
-1. **The graph.** Draw the steps as a picture (an inline visual where the app supports one; otherwise Mermaid). One box per step, coloured by how it will run: instant (rungs 1–2), quick AI check (3–4), clicks in Chrome (5). Mark steps that change data.
+1. **The graph.** Draw the steps as a picture (an inline visual where the app supports one; otherwise Mermaid). One box per step, coloured by how it will run: instant (rungs 1–2), AI check (3), clicks in Chrome (4). Mark steps that change data.
 2. **The step table.**
 
    | Step | Before | From now on |
