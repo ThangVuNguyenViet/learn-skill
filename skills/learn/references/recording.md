@@ -9,7 +9,7 @@ Once per computer. Run every command yourself; the person only does the steps ma
 1. `node --version` prints 20 or later. If not, ask the person to install Node from nodejs.org and walk them through it.
 2. If `~/.claude/skills/open-prose/SKILL.md` is missing, `npx -y skills add openprose/prose -g -y`. Then `npx -y playwright@1.64.1 cli install-browser chrome`.
 3. The person adds **Playwright Extension** to their main Chrome profile from https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm. Walk them through it; you cannot install it for them. Check: `~/Library/Application Support/Google/Chrome/Default/Extensions/mmlmfjhmonkocbjadbfplnigmagldckm` exists.
-4. The extension shows a connection token. Ask the person to paste it, then save it with `umask 077; printf '%s' '<token>' > ~/.claude/workflow-runs/.extension-token` and repeat it nowhere. `browser.mjs` loads it as `PLAYWRIGHT_MCP_EXTENSION_TOKEN`; without it, attaching hangs on the extension's connect page.
+4. The extension shows a connection token. Ask the person to paste it, then save it with `mkdir -p ~/.claude/workflow-runs; umask 077; printf '%s' '<token>' > ~/.claude/workflow-runs/.extension-token` and repeat it nowhere. `browser.mjs` loads it as `PLAYWRIGHT_MCP_EXTENSION_TOKEN`; without it, attaching hangs on the extension's connect page.
 
 Attach with `node ~/.claude/skills/learn/scripts/browser.mjs learn-<workflow> start <start-url>`; it falls back to Playwright's own window, signed in once through a saved profile, when the extension is missing.
 

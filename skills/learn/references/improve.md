@@ -19,6 +19,6 @@ Add a **Better ways** section to the before-saving retro, after the step table. 
 | Why | The gain, and the source or skill it comes from. |
 | Cost | What changes for them: a new sign-in, an install, a different result than they're used to. |
 
-Then ask which, if any, to use. Each proposal is its own yes or no. Nothing is installed, signed into or changed before a yes, and declining keeps the workflow exactly as recorded. A proposal they accept gets compiled and verified like any other step.
+Then ask about each proposal as its own question, in one or two plain sentences: what they would see differently, and what it costs them. Never pack several proposals, or the What/Why/Cost table, into one question. Each proposal is its own yes or no. Nothing is installed, signed into or changed before a yes, and declining keeps the workflow exactly as recorded. A proposal they accept gets compiled and verified like any other step.
 
 Offer nothing when nothing beats the recording; say so in one line.

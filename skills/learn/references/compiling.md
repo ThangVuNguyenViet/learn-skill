@@ -51,8 +51,12 @@ async (page, inputs) => page.evaluate(async ({ query }) => {
 
 - Start every browser step with `page.goto` to the page the request came from, so a relative `fetch` hits the right site.
 - Read per-form tokens from the page (`document.querySelector('input[name=csrf]').value`) at run time; never copy one from the trace.
+- When the request needs a key the summary redacted, first look for the site's own documented API on the same site (an "API" link in the page footer is a common sign) that needs no key; otherwise read the key from the page at run time.
+- In click versions, after a click that reloads a list (a filter, a search), wait until the list changes; waiting for the network to go quiet returns the old list.
 - Return only the fields later steps use.
 
 ## Each step's check
+
+A click version that cannot cover an input (a date range its menu lacks) throws, saying so in plain words, rather than return a different result.
 
 Put the check inside the step file as a `throw`: what must be true of its result for the run to continue (non-empty list, record id present, total matches the page). `run-step.mjs` exits non-zero and logs the failure; the workflow then runs that step's `.click.js` fallback and tells the person the page changed.
