@@ -52,6 +52,9 @@ async (page, inputs) => page.evaluate(async ({ query }) => {
 - Start every browser step with `page.goto` to the page the request came from, so a relative `fetch` hits the right site.
 - Read per-form tokens from the page (`document.querySelector('input[name=csrf]').value`) at run time; never copy one from the trace.
 - When the request needs a key the summary redacted, first look for the site's own documented API on the same site (an "API" link in the page footer is a common sign) that needs no key; otherwise read the key from the page at run time.
+- When the data arrives as an HTML page (the summary shows `[html, N chars]`), rung 1 fetches that page inside the browser and reads it with `DOMParser`, using selectors checked on the live page. Prefer stable hooks (`data-*` attributes, `js-*` classes, embedded JSON) over layout classes.
+- A click that only reads can still write: a tab or filter that POSTs a preference changes the person's account. Never replay those; reach the same view with a GET (the page's own URL with its query).
+- Check that the person is signed in (the page's title or a heading only signed-in pages have) and throw "not signed in to <site>" so the workflow can ask them to sign in.
 - In click versions, after a click that reloads a list (a filter, a search), wait until the list changes; waiting for the network to go quiet returns the old list.
 - Return only the fields later steps use.
 

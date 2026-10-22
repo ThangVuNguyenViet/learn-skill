@@ -14,7 +14,8 @@ const BEARER = /\b(Bearer|Basic)\s+[A-Za-z0-9._~+\/=-]+/g;
 const secretValues = new Set();
 const KEEP_HEADER = /^(content-type|accept|origin|referer|x-requested-with)$/i;
 const STATIC = /^(image|font|text\/css|video|audio)|javascript/;
-const NOISE = /google-analytics|googletagmanager|doubleclick|segment\.|sentry|datadog|intercom|hotjar|mixpanel|amplitude|facebook\.net|clarity\.ms|\/(collect|track|beacon|log|rgstr|telemetry)\b/i;
+const STATIC_URL = /\.(woff2?|ttf|otf|png|jpe?g|gif|svg|webp|ico|css|m?js|map)(\?|$)/i;
+const NOISE = /_private\/browser|\/rum\b|google-analytics|googletagmanager|doubleclick|segment\.|sentry|datadog|intercom|hotjar|mixpanel|amplitude|facebook\.net|clarity\.ms|\/(collect|track|beacon|log|rgstr|telemetry)\b/i;
 const MAX_BODY = 2000;
 
 const redactValue = (key, value) => (SECRET_FIELD.test(key) ? '[redacted]' : value);
@@ -34,8 +35,10 @@ const readBody = (file, mime = '') => {
     return [...new URLSearchParams(text)].map(([k, v]) => `${k}=${redactValue(k, v)}`).join('&').slice(0, MAX_BODY);
   return /html/.test(mime) ? `[html, ${text.length} chars]` : text.slice(0, MAX_BODY);
 };
+// Set-Cookie attributes (domain=github.com, path=/) are not secrets; scrubbing them hides the site's own name.
+const COOKIE_ATTR = /^(domain|path|expires|max-age|samesite|priority)$/i;
 const remember = (list = []) => list.filter((h) => SECRET_HEADER.test(h.name) && h.value.length >= 8)
-  .forEach((h) => { secretValues.add(h.value); for (const part of h.value.split(/[;,\s]+/)) { const v = part.split('=').slice(1).join('='); if (v.length >= 8) secretValues.add(v); } });
+  .forEach((h) => { secretValues.add(h.value); for (const part of h.value.split(/[;,\s]+/)) { const [k, ...rest] = part.split('='); const v = rest.join('='); if (v.length >= 8 && !COOKIE_ATTR.test(k)) secretValues.add(v); } });
 const scrub = (text) => {
   let t = text.replace(BEARER, '$1 [redacted]');
   for (const v of secretValues) t = t.split(v).join('[redacted]');
@@ -64,7 +67,7 @@ for (const f of files) {
     remember(rq.headers);
     remember(rs.headers);
     if (!/^https?:/.test(rq.url)) continue;
-    if (!keepAll && (STATIC.test(mime) || NOISE.test(rq.url))) continue;
+    if (!keepAll && (STATIC.test(mime) || STATIC_URL.test(rq.url) || NOISE.test(rq.url))) continue;
     out.push({
       n: out.length,
       tab: s.pageref,

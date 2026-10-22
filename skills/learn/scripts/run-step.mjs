@@ -43,9 +43,7 @@ if (ok) {
   mkdirSync(join(runDir, 'out'), { recursive: true });
   writeFileSync(saved, out);
 }
-if (!ok || out.length <= 4000) {
-  process.stdout.write(out);
-} else {
-  process.stdout.write(`Saved ${out.length} characters to ${saved}\nStarts with: ${out.slice(0, 300)}\n`);
-}
+if (!ok) process.stdout.write(out);
+else if (out.length <= 4000) process.stdout.write(`Saved to ${saved}\n${out}\n`);
+else process.stdout.write(`Saved ${out.length} characters to ${saved}\nStarts with: ${out.slice(0, 300)}\n`);
 process.exit(ok ? 0 : 1);
